@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora ROI de Retención | Präna</title>
+    <meta name="description" content="Descubre cuánto puedes ganar fidelizando a tus usuarios con nuestra calculadora interactiva de ROI">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- 
+        Präna ROI Calculator Landing Page
+        This file can be deployed directly on any static hosting service
+        like GitHub Pages, Vercel, or Netlify without modifications.
+        
+        Features:
+        - Interactive ROI calculator for customer retention
+        - EmailJS integration for lead capture
+        - Responsive design with Präna brand styling
+        - Vanilla HTML/CSS/JavaScript implementation
+    -->
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">💸 ¡Gana miles en solo 30 segundos!</h1>
+                <p class="hero-subtitle">¿Cuánto más puedes ganar fidelizando a tus usuarios (clientes, colaboradores y todo tipo)?</p>
+                <button class="cta-button" onclick="scrollToCalculator()">
+                    Empieza a calcular ahora 🚀
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <div class="calculator-card">
+                <h2 class="section-title">🏢 Calculadora de Potencial de Ingresos</h2>
+                <p class="section-subtitle">Completa la información y descubre tu potencial real de crecimiento</p>
+                
+                <form id="calculator-form" class="calculator-form">
+                    <!-- Campo 1: Usuarios activos -->
+                    <div class="form-group">
+                        <label for="activeUsers">¿Cuántos usuarios activos tienes al mes?</label>
+                        <div class="slider-container">
+                            <input type="range" id="activeUsers" min="100" max="50000" value="5000" class="slider">
+                            <div class="slider-value">
+                                <span id="activeUsersValue">5,000</span> usuarios
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campo 2: Retención actual -->
+                    <div class="form-group">
+                        <label for="currentRetention">¿Cuál es tu retención actual estimada?</label>
+                        <div class="slider-container">
+                            <input type="range" id="currentRetention" min="0" max="100" value="60" class="slider">
+                            <div class="slider-value">
+                                <span id="currentRetentionValue">60</span>%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campo 3: Gasto mensual -->
+                    <div class="form-group">
+                        <label for="monthlySpend">¿Cuánto gasta cada usuario al mes? ($ MXN)</label>
+                        <div class="input-container">
+                            <input type="number" id="monthlySpend" placeholder="ej. 500" min="1" class="number-input">
+                            <span class="currency">MXN</span>
+                        </div>
+                    </div>
+
+                    <!-- Campo 4: Costo de adquisición -->
+                    <div class="form-group">
+                        <label for="acquisitionCost">¿Cuánto cuesta adquirir un nuevo usuario? ($ MXN)</label>
+                        <div class="input-container">
+                            <input type="number" id="acquisitionCost" placeholder="ej. 200" min="1" class="number-input">
+                            <span class="currency">MXN</span>
+                        </div>
+                    </div>
+
+                    <!-- Campo 5: Mejora de retención -->
+                    <div class="form-group">
+                        <label>¿Cuánto crees que podríamos mejorar tu retención?</label>
+                        <div class="improvement-options">
+                            <button type="button" class="improvement-btn" data-value="15">
+                                🏛 Conservador (+15%)
+                            </button>
+                            <button type="button" class="improvement-btn active" data-value="25">
+                                🏢 Moderado (+25%)
+                            </button>
+                            <button type="button" class="improvement-btn" data-value="35">
+                                🚀 Agresivo (+35%)
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="button" id="calculateBtn" class="calculate-button">
+                        Ver mi potencial de ingresos 💰
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Modal -->
+    <div id="formModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Completa tus datos para ver los resultados</h3>
+                <p>Solo necesitamos algunos datos para enviarte el reporte completo</p>
+            </div>
+            
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="fullName">Nombre completo *</label>
+                    <input type="text" id="fullName" required class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo electrónico *</label>
+                    <input type="email" id="email" required class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" required class="form-input">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="cancel-button">Cancelar</button>
+                    <button type="submit" id="submitBtn" class="submit-button">
+                        Enviar y ver resultados 📊
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section hidden">
+        <div class="container">
+            <div class="results-card">
+                <h2 class="results-title">🎯 Tus Resultados Calculados</h2>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-icon">💰</div>
+                        <div class="result-content">
+                            <h3>Incremento potencial de ingresos anuales</h3>
+                            <p class="result-value" id="revenueIncrease">$0 MXN</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-icon">💸</div>
+                        <div class="result-content">
+                            <h3>Ahorro potencial en adquisición</h3>
+                            <p class="result-value" id="acquisitionSavings">$0 MXN</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-message">
+                    <p>Los números no mienten. Estás a una decisión de transformar tu lealtad en ingresos reales.</p>
+                </div>
+                
+                <div class="results-actions">
+                    <button class="action-button primary">
+                        Quiero mi demo gratuita 🎬
+                    </button>
+                    <button class="action-button secondary">
+                        Hablemos de mi estrategia 💬
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Enviando información...</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
